@@ -98,3 +98,7 @@ For example, if your server is running locally on port 30000, the URL would be:
 
 Use `Bearer Token` as the authentication method.
 Then, use the exact token you've set in your `.env` file.
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file.
