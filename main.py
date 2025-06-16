@@ -65,6 +65,9 @@ async def set_secret(secret: str, ctx: Context) -> str:
     if user_id is None:
         # If no user ID is found, we fall back to a default user to support traditional MCP
         user_id = "single_user"
+    # Check if the user is authorized
+    if user_id not in secrets:
+        return f"{REQUEST_AUTH_TOKEN} {gen_user_auth_token(user_id)}"
     # Store the provided 'secret' string, keyed by the user's ID
     secrets[user_id] = secret
     return f"Secret set for user {user_id}"
@@ -76,9 +79,9 @@ async def auth(request: Request):
     """
     Handles user authorization.
 
-    This endpoint is invoked by WELLAIOS and is responsible for initiating or completing 
+    This endpoint is invoked by WELLAIOS and is responsible for initiating or completing
     the user authorization flow. For example, it might redirect the user to a third-party
-    service like Google to obtain an access token, which can then be used to access the 
+    service like Google to obtain an access token, which can then be used to access the
     user's data or services.
     """
     # Retrieve the 'userid' and 'token' from the request's query parameters
